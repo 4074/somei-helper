@@ -1,0 +1,25 @@
+{
+  "name": "soyoung-helper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/4074/soyoung-helper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/4074/soyoung-helper/issues"
+  },
+  "homepage": "https://github.com/4074/soyoung-helper#readme",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "express": "^4.14.0",
+    "moment": "^2.14.1",
+    "superagent": "^2.2.0"
+  }
+}
