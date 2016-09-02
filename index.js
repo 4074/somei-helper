@@ -29,6 +29,8 @@ function fetch(cb) {
             special: {$first: '$special'},
             date: {$first: '$date'}
         }
+    }, {
+        $sort: {date: -1}
     }]).limit(12).exec(function(err, data) {
         if (err) {
             console.log(err)
@@ -40,7 +42,7 @@ function fetch(cb) {
 // fetch()
 
 app.use(express.static(__dirname + '/static'))
-app.use('/', function(req, res) {
+app.get('/', function(req, res) {
     console.log('get /')
     fetch(function(err, data) {
         if (err) {
@@ -63,14 +65,14 @@ app.use('/', function(req, res) {
     })
 })
 
-app.use('/run', function(req, res) {
+app.get('/run', function(req, res) {
     console.log('get /run')
     run.soyoung()
     run.gmei()
     res.send('running')
 })
 
-app.use('/cancelJob', function(req, res) {
+app.get('/cancelJob', function(req, res) {
     console.log('get /cancelJob')
     job && job.cancel()
     res.send(job ? 'cancel' : 'null')
