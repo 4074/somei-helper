@@ -1,6 +1,12 @@
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost/sg_helper')
+mongoose.connect('mongodb://localhost/sg_helper', function(err, connection) {
+    if (err) {
+        console.log(err)
+    } else {
+        console.log('mongodb connected')
+    }
+})
 
 const RecordSchema = new mongoose.Schema({
     site: {type: String},
