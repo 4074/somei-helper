@@ -41,6 +41,7 @@ function fetch(cb) {
 
 app.use(express.static(__dirname + '/static'))
 app.use('/', function(req, res) {
+    console.log('get /')
     fetch(function(err, data) {
         if (err) {
             res.send(err)
@@ -63,12 +64,14 @@ app.use('/', function(req, res) {
 })
 
 app.use('/run', function(req, res) {
+    console.log('get /run')
     run.soyoung()
     run.gmei()
     res.send('running')
 })
 
 app.use('/cancelJob', function(req, res) {
+    console.log('get /cancelJob')
     job && job.cancel()
     res.send(job ? 'cancel' : 'null')
 })
