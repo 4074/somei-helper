@@ -9,16 +9,9 @@ html {
 
 @media (-webkit-min-device-pixel-ratio: 2) {
     html {
-        font-size: 80px
+        font-size: 40px
     }
 }
-
-@media (max-device-width: 1080px) and (-webkit-min-device-pixel-ratio: 2) {
-    html {
-        font-size: 60px
-    }
-}
-
 
 @media (min-device-width: 375px) and (max-device-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
     html {
