@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const moment = require('moment')
 
 mongoose.connect('mongodb://localhost/sg_helper', function(err, connection) {
     if (err) {
@@ -13,7 +14,7 @@ const RecordSchema = new mongoose.Schema({
     date: {type: String},
     count: {type: Number},
     special: {type: Number},
-    _date: {type: Date, default: Date.now}
+    _date: {type: Date, default: moment().utcOffset(8).toDate()}
 })
 
 module.exports = mongoose.model('Record', RecordSchema)

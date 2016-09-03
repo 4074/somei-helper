@@ -3,10 +3,9 @@ const countGmei = require('./gmei')
 const moment = require('moment')
 const Record = require('./models')
 
-const now = new Date()
-const m = moment([now.getFullYear(), now.getMonth(), now.getDate()]).add(-1, 'days')
-
 function soyoung() {
+    const now = new Date()
+    const m = moment([now.getFullYear(), now.getMonth(), now.getDate()]).add(-1, 'days')
     countSoyoung(parseInt(m.format('x'), 10), function(data) {
         let special = 0
         let ids = []
@@ -30,6 +29,8 @@ function soyoung() {
 }
 
 function gmei() {
+    const now = new Date()
+    const m = moment([now.getFullYear(), now.getMonth(), now.getDate()]).add(-1, 'days')
     countGmei(parseInt(m.format('x'), 10), function(data) {
         let buyCount = 0
         
