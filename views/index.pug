@@ -1,0 +1,17 @@
+doctype html
+html(lang="en")
+    head
+        title= somei-helper
+        link(rel='stylesheet' href='style.css')
+    body
+        .container
+            table
+                thead
+                    tr
+                        - for (var i=0; i<titles.length; i++)
+                          th= titles[i]
+                tbody
+                    - for (var i=0; i<list.length; i++)
+                      tr(class=list[i]['site'])
+                        - for (var j=0; j<keys.length; j++)
+                          td= list[i][keys[j]] 

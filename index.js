@@ -1,13 +1,16 @@
 const express = require('express')
 const moment = require('moment')
 const schedule = require('node-schedule')
+const pug = require('pug')
 
 const Record = require('./src/models')
 const run = require('./src/run')
 
 let job = null
+let production = process.env.NODE_ENV === 'production'
 
-if (process.env.NODE_ENV === 'production') {
+
+if (production) {
     job = schedule.scheduleJob('0 0 9 * * *', function() {
         run.soyoung()
         run.gmei()
@@ -30,7 +33,7 @@ function fetch(cb) {
             date: {$first: '$date'}
         }
     }, {
-        $sort: {date: -1}
+        $sort: {date: -1, site: 1}
     }]).limit(12).exec(function(err, data) {
         if (err) {
             console.log(err)
@@ -41,24 +44,17 @@ function fetch(cb) {
 // fetch()
 
 app.use(express.static(__dirname + '/static'))
+app.engine('pug', pug.__express)
 app.get('/', function(req, res) {
     fetch(function(err, data) {
         if (err) {
             res.send(err)
         } else {
-            const text = []
-            const template = '地址:$site 日期:$date 发帖:$count $special_title:$special'
-            
-            data.forEach(item => {
-                let t = template.replace('$special_title', item.site == 'soyoung' ? '认证': '美购日记')
-                
-                for(const key in item) {
-                    t = t.replace('$' + key, item[key])
-                }
-                text.push(t)
+            res.render('index.pug', {
+                list: data,
+                keys: ['date', 'site', 'count', 'special'],
+                titles: ['日期', '地址', '发帖', '其他']
             })
-            
-            res.send(text.join('<br>'))
         }
     })
 })

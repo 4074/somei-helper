@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Microsoft YaHei";
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #fff;
+}
+
+.container {
+    min-width: 480px;
+    max-width: 600px;
+    width: 100%;
+    padding: 0 20px;
+    margin: 20px auto 0;
+    box-sizing: border-box;
+}
+
+.container table {
+    width: 100%;
+    border-collapse: separate;
+    font-size: 14px;
+    border-spacing: 0;
+    border-top: solid 1px #e2e2e2;
+    border-left: solid 1px #e2e2e2;
+    border-radius: 6px;
+    color: #ccc;
+}
+
+.container table th, .container table td {
+    padding: 8px 12px;
+    border-bottom: solid 1px #e2e2e2;
+    border-right: solid 1px #e2e2e2;
+    width: 25%;
+}
+
+.container table th {
+    padding: 4px 4px;
+    font-weight: normal;
+    font-size: 12px;
+    background: #f2f2f2;
+    color: #333;
+}
+
+.container th:first-child {
+    border-top-left-radius: 6px;
+}
+
+.container th:last-child {
+    border-top-right-radius: 6px;
+}
+
+.container tr:last-child td:first-child {
+    border-bottom-left-radius: 6px;
+}
+
+.container tr:last-child td:last-child {
+    border-bottom-right-radius: 6px;
+}
+
+.container table .gmei:first-child, .container table .soyoung:nth-child(2) {
+    color: #333;
+}

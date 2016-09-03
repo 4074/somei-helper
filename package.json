@@ -22,6 +22,7 @@
     "moment": "^2.14.1",
     "mongoose": "^4.5.10",
     "node-schedule": "^1.1.1",
+    "pug": "^2.0.0-beta6",
     "superagent": "^2.2.0"
   }
 }
