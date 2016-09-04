@@ -4,28 +4,8 @@
 }
 
 html {
-    font-size: 14px;
+    font-size: 62.5%;
 }
-
-@media (-webkit-min-device-pixel-ratio: 2) {
-    html {
-        font-size: 40px
-    }
-}
-
-@media (min-device-width: 375px) and (max-device-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
-    html {
-        font-size: 37.5px
-    }
-}
-
-@media (max-device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
-    html {
-        font-size: 32px
-    }
-}
-
-
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Microsoft YaHei";
@@ -44,8 +24,9 @@ body {
     box-sizing: border-box;
 }
 
-@media (max-device-width: 768px) {
+@media (-webkit-min-device-pixel-ratio: 2) {
     .container {
+        min-width: 0;
         max-width: none;
     }
 }
@@ -66,6 +47,12 @@ body {
     border-bottom: solid 1px #e2e2e2;
     border-right: solid 1px #e2e2e2;
     width: 25%;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2) {
+    .container table th, .container table td {
+        width: auto;
+    }
 }
 
 .container table th {
