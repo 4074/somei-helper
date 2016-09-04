@@ -9,7 +9,7 @@ html {
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Microsoft YaHei";
-    font-size: 1rem;
+    font-size: 1.4rem;
     line-height: 1.5;
     color: #333;
     background-color: #fff;
@@ -24,7 +24,7 @@ body {
     box-sizing: border-box;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2) {
+@media (max-device-width: 980px) and (-webkit-min-device-pixel-ratio: 2) {
     .container {
         min-width: 0;
         max-width: none;
@@ -34,7 +34,7 @@ body {
 .container table {
     width: 100%;
     border-collapse: separate;
-    font-size: 1rem;
+    font-size: 1.4rem;
     border-spacing: 0;
     border-top: solid 1px #e2e2e2;
     border-left: solid 1px #e2e2e2;
@@ -49,7 +49,7 @@ body {
     width: 25%;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2) {
+@media (max-device-width: 980px) and (-webkit-min-device-pixel-ratio: 2) {
     .container table th, .container table td {
         width: auto;
     }
@@ -58,7 +58,7 @@ body {
 .container table th {
     padding: 4px 4px;
     font-weight: normal;
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     background: #f2f2f2;
     color: #333;
 }
