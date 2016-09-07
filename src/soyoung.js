@@ -44,13 +44,15 @@ function countFromPage(index, time, data, cb) {
                     // if (tagCount < 2 && tagStr.indexOf('眼') === -1 && tagStr.indexOf('鼻') === -1) {
                         
                         // console.log(tagStr)
-                        data.push({
+                        const d = {
                             id: $item.find('.head_pic div').first().attr('uid_s'),
                             author: $item.find('.head_pic a img').first().attr('alt') || '',
                             uid: $item.find('.head_pic').first().attr('uid'),
                             date: dateStr,
                             verify: ($item.find('.head_pic a').first().attr('href') || '').indexOf('y.soyoung.com') >= 0
-                        })
+                                    || ($item.find('.head_pic a img').first().attr('src') || '').indexOf('soyoung.com/doctor') >= 0
+                        }
+                        data.push(d)
                     // }
                 }
             }
@@ -60,6 +62,55 @@ function countFromPage(index, time, data, cb) {
         } else {
             countFromPage(index + 1, time, data, cb)
         }
+    })
+}
+
+function test(index) {
+    let data = []
+    request.post(url + index)
+    .end(function(err, res) {
+        if (err) {
+            console.log(err)
+        }
+        
+        let $ = cheerio.load(res.text)
+        let $ul = $('.beauty_list')
+        let $li = $ul.find('>li').not('.top')
+        console.log($li.length)
+        $li.each((i, item) => {
+            const $item = $(item)
+            const dateStr = $(item).find('.date').text()
+            const date = new Date(dateStr).getTime()
+
+            const tagStr = $(item).find('.tag').text().replace(/ |\n/g, '')
+            let tagCount = 0
+            
+            tags.forEach(item => {
+                if (tagStr.indexOf(item) >= 0) {
+                    tagCount ++
+                }
+                if (tagCount >= 2) {
+                    return false
+                }
+            })
+
+            const d = {
+                id: $item.find('.head_pic div').first().attr('uid_s'),
+                author: $item.find('.head_pic a img').first().attr('alt') || '',
+                uid: $item.find('.head_pic').first().attr('uid'),
+                date: dateStr,
+                verify: ($item.find('.head_pic a').first().attr('href') || '').indexOf('y.soyoung.com') >= 0
+                        || ($item.find('.head_pic a img').first().attr('src') || '').indexOf('soyoung.com/doctor') >= 0
+            }
+            
+            if (d.verify) {
+                console.log(d)
+            }
+            
+            data.push(d)
+        })
+        
+        console.log(data)
     })
 }
 

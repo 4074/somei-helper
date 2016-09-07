@@ -50,14 +50,14 @@ function countGmeiItem(index, time, data, cb) {
                 } else if (dateStr.indexOf('天') >= 0) {
                     if (dateStr === '1天前') {
                         if (item.images.length) {
-                            if (item.images[0].image.indexOf(moment(time).format('YYYY/MM/DD')) > 0) {
+                            // if (item.images[0].image.indexOf(moment(time).format('YYYY/MM/DD')) > 0) {
                                 // IN
                                 return pushInDate('images in ' + dateStr, item)
-                            } else {
-                                isOutday = true
-                                console.log('outday ' + dateStr)
-                                return false
-                            }
+                            // } else {
+                            //     isOutday = true
+                            //     console.log('outday ' + dateStr)
+                            //     return false
+                            // }
                         } else if (isPrevIn) {
                             return pushInDate('no images in ' + dateStr, item)
                         }
