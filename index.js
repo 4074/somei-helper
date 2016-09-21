@@ -4,22 +4,28 @@ const schedule = require('node-schedule')
 const pug = require('pug')
 
 const Record = require('./src/models')
-const run = require('./src/run')
+const crawler = require('./src/crawler')
 
 let job = null
 let production = process.env.NODE_ENV === 'production'
 
-
+// In production
+// Run a job 9:00 every day
 if (production) {
     job = schedule.scheduleJob('0 0 9 * * *', function() {
-        run.soyoung()
-        run.gmei()
+        crawler.soyoung()
+        crawler.gmei()
     })
     console.log('job is running')
 }
 
 const app = express()
 
+/**
+ * Get crawler result data from database
+ * @param  {Function} cb callback
+ * @return {Void}
+ */
 function fetch(cb) {
     Record.aggregate([{
         $sort: {_date: -1}
@@ -41,11 +47,11 @@ function fetch(cb) {
         cb && cb(err, data)
     })
 }
-// fetch()
 
 app.use(express.static(__dirname + '/static'))
 app.engine('pug', pug.__express)
 app.get('/', function(req, res) {
+    // fetch data and render
     fetch(function(err, data) {
         if (err) {
             res.send(err)
@@ -59,9 +65,9 @@ app.get('/', function(req, res) {
     })
 })
 
-app.get('/run', function(req, res) {
-    run.soyoung()
-    run.gmei()
+app.get('/runCrawler', function(req, res) {
+    crawler.soyoung()
+    crawler.gmei()
     res.send('running')
 })
 

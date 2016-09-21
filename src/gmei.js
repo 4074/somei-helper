@@ -6,29 +6,43 @@ const url = 'http://backend.gmei.com/api/community/index?device_id=8690140261014
     &os_version=5.1&channel=meizu&screen=1080x1920&version=6.2.1&platform=android&app_name=com.wanmeizhensuo.zhensuo\
     &model=m1+metal&tabtype=1&lat=23.131033&current_city_id=guangzhou&start_num='
 
-function countGmei(time, cb) {
+/**
+ * Count the article in gmei.com
+ * @param  {Number}   time timestamp of the day article be post
+ * @param  {Function} cb   callback
+ * @return {Void}
+ */
+function countPost(time, cb) {
     let result = []
-    countGmeiItem(0, time, result, cb)
+    countFromPage(0, time, result, cb)
 }
 
-function countGmeiItem(index, time, data, cb) {
+/**
+ * Count the article from a page
+ * @param  {Number}   index The page index
+ * @param  {Number}   time  Timestamp
+ * @param  {Array}    data  The data store
+ * @param  {Function} cb    Callback
+ * @return {Void}
+ */
+function countFromPage(index, time, data, cb) {
     let isOutday = false
-    
+
     request.get(url + index * 10)
     .set('Accept', 'application/json')
     .end(function(err, res) {
         if (err) console.log(err);
-        
+
         const topics = res.body.data.topics
         console.log(index)
-        
+
         let isPrevIn = false
         function pushInDate(text, item) {
             isPrevIn = true
             console.log(text)
             data.push(item)
         }
-        
+
         topics.forEach(item => {
             const dateStr = item.date
             if (dateStr != '刚刚' && dateStr.indexOf('分钟') < 0){
@@ -71,7 +85,7 @@ function countGmeiItem(index, time, data, cb) {
                     if (time === mt) {
                         // IN
                         return pushInDate(dateStr, item)
-                        
+
                     } else if (time > mt) {
                         isOutday = true
                         console.log('outday ' + dateStr)
@@ -79,16 +93,16 @@ function countGmeiItem(index, time, data, cb) {
                     }
                 }
             }
-            
+
             isPrevIn = false
         })
-        
+
         if (isOutday) {
             cb(data)
         } else {
-            countGmeiItem(index + 1, time, data, cb)
+            countFromPage(index + 1, time, data, cb)
         }
     })
 }
 
-module.exports = countGmei
+module.exports = countPost

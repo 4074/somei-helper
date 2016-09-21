@@ -3,6 +3,7 @@ const countGmei = require('./gmei')
 const moment = require('moment')
 const Record = require('./models')
 
+// Get data from soyoung.com and save to database
 function soyoung() {
     const now = new Date()
     const m = moment([now.getFullYear(), now.getMonth(), now.getDate()]).add(-1, 'days')
@@ -10,13 +11,12 @@ function soyoung() {
         let special = 0
         let ids = []
         data.forEach(item => {
-            console.log(item.author)
             if (ids.indexOf(item.id) < 0) {
                 if (item.verify || item.author.indexOf('医院') >= 0) special ++;
                 ids.push(item.id)
             }
         })
-        
+
         let record = {
             site: 'soyoung',
             date: m.format('YYYY-MM-DD'),
@@ -28,12 +28,13 @@ function soyoung() {
     })
 }
 
+// Get data from gmei.com and save to database
 function gmei() {
     const now = new Date()
     const m = moment([now.getFullYear(), now.getMonth(), now.getDate()]).add(-1, 'days')
     countGmei(parseInt(m.format('x'), 10), function(data) {
         let buyCount = 0
-        
+
         data.forEach(item => {
             if (item.tags && item.tags.length) {
                 item.tags.forEach(t => {
@@ -44,7 +45,7 @@ function gmei() {
                 })
             }
         })
-        
+
         let record = {
             site: 'gmei',
             date: m.format('YYYY-MM-DD'),
@@ -56,6 +57,11 @@ function gmei() {
     })
 }
 
+/**
+ * Save data to database
+ * @param  {Object} data
+ * @return {Void}
+ */
 function saveRecord(data) {
     const record = new Record(data)
 
