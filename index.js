@@ -1,8 +1,10 @@
+const fs = require('fs')
 const express = require('express')
 const moment = require('moment')
 const schedule = require('node-schedule')
 const pug = require('pug')
 
+const config = require('./config')
 const Record = require('./src/models')
 const crawler = require('./src/crawler')
 
@@ -27,25 +29,56 @@ const app = express()
  * @return {Void}
  */
 function fetch(cb) {
-    Record.aggregate([{
-        $sort: {_date: -1}
-    }, {
-        $group: {
-            _id: {site: '$site', date: '$date'},
-            _date: {$first: '$_date'},
-            site: {$first: '$site'},
-            count: {$first: '$count'},
-            special: {$first: '$special'},
-            date: {$first: '$date'}
-        }
-    }, {
-        $sort: {date: -1, site: 1}
-    }]).limit(12).exec(function(err, data) {
-        if (err) {
-            console.log(err)
-        }
-        cb && cb(err, data)
-    })
+    if (config.database === "mongodb") {
+        Record.aggregate([{
+            $sort: {_date: -1}
+        }, {
+            $group: {
+                _id: {site: '$site', date: '$date'},
+                _date: {$first: '$_date'},
+                site: {$first: '$site'},
+                count: {$first: '$count'},
+                special: {$first: '$special'},
+                date: {$first: '$date'}
+            }
+        }, {
+            $sort: {date: -1, site: 1}
+        }]).limit(12).exec(function(err, data) {
+            if (err) {
+                console.log(err)
+            }
+            cb && cb(err, data)
+        })
+    } else {
+        fs.readFile('./records1.json', 'utf8', function (err, data) {
+            if (err) cb(err);
+
+            var result = []
+            const keys = []
+            var json = JSON.parse(data).reverse()
+            json = json.sort(function(a, b) {
+                return a.date < b.date ? 1 : -1
+            })
+
+            for (var i=0, len=json.length; i<len; i++) {
+                const item = json[i]
+                const key = item.site + item.date
+                if (keys.indexOf(key) < 0) {
+                    keys.push(key)
+                    result.push(item)
+                }
+                if (result.length >= 12) {
+                    break
+                }
+            }
+
+            result.sort(function(a, b) {
+                return a.date === b.date ? (a.site > b.site ? 1 : -1) : a.date < b.date ? 1 : -1
+            })
+
+            cb(null, result)
+        })
+    }
 }
 
 app.use(express.static(__dirname + '/static'))
@@ -76,6 +109,6 @@ app.get('/cancelJob', function(req, res) {
     res.send(job ? 'cancel' : 'null')
 })
 
-app.listen(3344, function() {
-    console.log('app listen on port 3344')
+app.listen(config.port, function() {
+    console.log('app listen on port ', config.port)
 })

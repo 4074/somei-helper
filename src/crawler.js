@@ -1,3 +1,5 @@
+const fs = require('fs')
+const config = require('./../config')
 const countSoyoung = require('./soyoung')
 const countGmei = require('./gmei')
 const moment = require('moment')
@@ -63,11 +65,25 @@ function gmei() {
  * @return {Void}
  */
 function saveRecord(data) {
-    const record = new Record(data)
+    data._date = moment().utcOffset(8).toDate()
+    if (config.database === 'mongodb') {
+        const record = new Record(data)
+        record.save(function(err, data) {
+            if (err) console.log(err)
+        })
+    } else {
+        const filePath = './records.json'
+        fs.readFile(filePath, 'utf8', function (err, source) {
+            if (err) console.log(err);
 
-    record.save(function(err, data) {
-        if (err) console.log(err)
-    })
+            var json = JSON.parse(source)
+            json.push(data)
+
+            fs.writeFile(filePath, JSON.stringify(json), function(err){
+                if (err) console.log(err)
+            })
+        })
+    }
 }
 
 module.exports = {

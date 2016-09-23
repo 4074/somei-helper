@@ -3,7 +3,7 @@ const moment = require('moment')
 
 mongoose.connect('mongodb://localhost/sg_helper', function(err, connection) {
     if (err) {
-        console.log(err)
+        console.log('mongodb connect fail')
     } else {
         console.log('mongodb connected')
     }
