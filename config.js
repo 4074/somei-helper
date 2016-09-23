@@ -4,8 +4,8 @@ const config = {
 }
 
 const configOnHeroku = {
-    port: 3100,
+    port: 80,
     database: 'json'
 }
 
-module.exports = process.env.NODE && ~process.env.NODE.indexOf("heroku") || 1 ? configOnHeroku : config
+module.exports = process.env.NODE && ~process.env.NODE.indexOf("heroku") ? configOnHeroku : config
