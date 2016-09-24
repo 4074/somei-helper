@@ -1,10 +1,11 @@
 const config = {
     port: 3344,
-    database: 'mongodb'
+    database: 'mongodb',
+    databaseConnected: false
 }
 
 const configOnHeroku = {
-    port: 80,
+    port: process.env.port,
     database: 'json'
 }
 

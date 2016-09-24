@@ -29,7 +29,7 @@ const app = express()
  * @return {Void}
  */
 function fetch(cb) {
-    if (config.database === "mongodb") {
+    if (config.database === "mongodb" && config.databaseConnected) {
         Record.aggregate([{
             $sort: {_date: -1}
         }, {
@@ -50,7 +50,7 @@ function fetch(cb) {
             cb && cb(err, data)
         })
     } else {
-        fs.readFile('./records1.json', 'utf8', function (err, data) {
+        fs.readFile('./records.json', 'utf8', function (err, data) {
             if (err) cb(err);
 
             var result = []
@@ -98,7 +98,7 @@ app.get('/', function(req, res) {
     })
 })
 
-app.get('/runCrawler', function(req, res) {
+app.get('/run', function(req, res) {
     crawler.soyoung()
     crawler.gmei()
     res.send('running')
