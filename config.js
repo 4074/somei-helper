@@ -7,7 +7,7 @@ const config = {
 }
 
 const configOnHeroku = {
-    port: process.env.port,
+    port: process.env.PORT,
     database: 'json'
 }
 
