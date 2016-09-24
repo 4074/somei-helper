@@ -1,3 +1,5 @@
+"use strict";
+
 const request = require('superagent')
 const cheerio = require('cheerio')
 
@@ -36,7 +38,7 @@ function countFromPage(index, time, data, cb) {
         let $ = cheerio.load(res.text)
         let $ul = $('.beauty_list')
         let $li = $ul.find('>li').not('.top')
-        
+
         console.log($li.length)
 
         $li.each((i, item) => {

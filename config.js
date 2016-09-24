@@ -1,3 +1,5 @@
+"use strict";
+
 const config = {
     port: 3344,
     database: 'mongodb',
