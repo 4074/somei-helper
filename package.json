@@ -1,5 +1,5 @@
 {
-  "name": "soyoung-helper",
+  "name": "somei-helper",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/4074/soyoung-helper.git"
+    "url": "git+https://github.com/4074/somei-helper.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/4074/soyoung-helper/issues"
+    "url": "https://github.com/4074/somei-helper/issues"
   },
-  "homepage": "https://github.com/4074/soyoung-helper#readme",
+  "homepage": "https://github.com/4074/somei-helper#readme",
   "dependencies": {
     "cheerio": "^0.22.0",
     "express": "^4.14.0",

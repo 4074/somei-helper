@@ -1,1 +1,1 @@
-# soyoung-helper
+# somei-helper

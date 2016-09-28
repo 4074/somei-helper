@@ -1,7 +1,7 @@
 "use strict";
 
 const config = {
-    port: 3344,
+    port: process.env.PORT || 4301,
     database: 'mongodb',
     databaseConnected: false
 }
