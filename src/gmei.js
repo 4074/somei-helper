@@ -4,9 +4,9 @@ const request = require('superagent')
 const cheerio = require('cheerio')
 const moment = require('moment')
 
-const url = 'http://backend.gmei.com/api/community/index?device_id=869014026101460&lng=113.411888\
-    &os_version=5.1&channel=meizu&screen=1080x1920&version=6.2.1&platform=android&app_name=com.wanmeizhensuo.zhensuo\
-    &model=m1+metal&tabtype=1&lat=23.131033&current_city_id=guangzhou&start_num='
+const url = 'http://backend.gmei.com/api/community/index?\
+    os_version=5.1&screen=1080x1920&version=6.2.1&platform=android&app_name=com.wanmeizhensuo.zhensuo\
+    &tabtype=1&current_city_id=guangzhou&start_num='
 
 /**
  * Count the article in gmei.com
@@ -33,7 +33,10 @@ function countFromPage(index, time, data, cb) {
     request.get(url + index * 10)
     .set('Accept', 'application/json')
     .end(function(err, res) {
-        if (err) console.log(err);
+        if (err) {
+            console.log(err);
+            cb(data)
+        }
 
         const topics = res.body.data.topics
         console.log(index)
@@ -99,7 +102,7 @@ function countFromPage(index, time, data, cb) {
             isPrevIn = false
         })
 
-        if (isOutday) {
+        if (isOutday || index > 500) {
             cb(data)
         } else {
             countFromPage(index + 1, time, data, cb)

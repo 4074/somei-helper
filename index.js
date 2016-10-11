@@ -16,7 +16,7 @@ let production = process.env.NODE_ENV === 'production'
 // In production
 // Run a job 9:00 every day
 if (production) {
-    job = schedule.scheduleJob('0 0 9 * * *', function() {
+    job = schedule.scheduleJob('0 30 9 * * *', function() {
         crawler.soyoung()
         crawler.gmei()
     })
@@ -100,9 +100,17 @@ app.get('/', function(req, res) {
     })
 })
 
-app.get('/run', function(req, res) {
-    crawler.soyoung()
-    crawler.gmei()
+app.get('/run/:type?', function(req, res) {
+    if (req.params.type) {
+        if (req.params.type === 'soyoung') {
+            crawler.soyoung()
+        } else if (req.params.type === 'gmei') {
+            crawler.gmei()
+        }
+    } else {
+        crawler.soyoung()
+        crawler.gmei()
+    }
     res.send('running')
 })
 

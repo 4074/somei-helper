@@ -39,7 +39,7 @@ function countFromPage(index, time, data, cb) {
         let $ul = $('.beauty_list')
         let $li = $ul.find('>li').not('.top')
 
-        console.log($li.length)
+        // console.log($li.length)
 
         $li.each((i, item) => {
             const $item = $(item)
@@ -80,7 +80,7 @@ function countFromPage(index, time, data, cb) {
                 }
             }
         })
-        if (isOutday) {
+        if (isOutday || index > 500) {
             cb(data)
         } else {
             countFromPage(index + 1, time, data, cb)
