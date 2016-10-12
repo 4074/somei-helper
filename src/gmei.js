@@ -55,7 +55,7 @@ function countFromPage(index, time, data, cb) {
                 if (dateStr.indexOf('小时') >= 0) {
                     if (parseInt(dateStr) > hour) {
                         // IN
-                        pushInDate(dateStr, item)
+                        return pushInDate(dateStr, item)
                     } else if (parseInt(dateStr) == hour) {
                         if (item.images.length) {
                             if (item.images[0].image.indexOf(moment(time).format('YYYY/MM/DD')) > 0) {

@@ -18,6 +18,9 @@ let production = process.env.NODE_ENV === 'production'
 if (production) {
     job = schedule.scheduleJob('0 30 9 * * *', function() {
         crawler.soyoung()
+    })
+
+    schedule.scheduleJob('0 28 9 * * *', function() {
         crawler.gmei()
     })
     console.log('job is running')
