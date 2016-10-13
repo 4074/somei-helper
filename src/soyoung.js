@@ -1,6 +1,6 @@
 "use strict";
 
-const request = require('superagent')
+const request = require('request')
 const cheerio = require('cheerio')
 
 const url = 'http://www.soyoung.com/post1?post_type=0&list_type=1&time=3&page='
@@ -29,13 +29,12 @@ function countFromPage(index, time, data, cb) {
     let maxTime = time + 3600 * 24 * 1000
     let isOutday = false
 
-    request.post(url + index)
-    .end(function(err, res) {
+    request.post(url + index, function(err, res, body) {
         if (err) {
             console.log(err)
         }
 
-        let $ = cheerio.load(res.text)
+        let $ = cheerio.load(body)
         let $ul = $('.beauty_list')
         let $li = $ul.find('>li').not('.top')
 

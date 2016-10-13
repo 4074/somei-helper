@@ -1,6 +1,6 @@
 "use strict";
 
-const request = require('superagent')
+const request = require('request')
 const cheerio = require('cheerio')
 const moment = require('moment')
 
@@ -30,15 +30,20 @@ function countPost(time, cb) {
 function countFromPage(index, time, data, cb) {
     let isOutday = false
 
-    request.get(url + index * 10)
-    .set('Accept', 'application/json')
-    .end(function(err, res) {
+    request.get(url + index * 10, {timeout: 10000},
+    function(err, res, body) {
         if (err) {
+            if (err.code === 'ETIMEDOUT') {
+                countFromPage(index, time, data, cb)
+            } else {
+                cb(data)
+            }
             console.log(err);
-            cb(data)
+            return
         }
 
-        const topics = res.body.data.topics
+        body = JSON.parse(body)
+        const topics = body.data.topics
         console.log(index)
 
         let isPrevIn = false
